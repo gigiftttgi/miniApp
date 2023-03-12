@@ -249,6 +249,55 @@ app.post("/detail", function (req, res) {
   }
 });
 
+app.post("/member", function (req, res) {
+  const id = req.body.id;
+  const form = req.body.form;
+  var mem;
+  let member = [];
+  const sql1 = "SELECT Member From club WHERE ID = " + mysql.escape(id);
+  const sql2 = "SELECT Member From activies WHERE ID = " + mysql.escape(id);
+  if (form == "Clubs") {
+    connection.query(sql1, function (error, results) {
+      if (error) throw error;
+      Object.keys(results).forEach(function (key) {
+        var row = results[key];
+        mem = row.Member.split(",");
+        // mem = m;
+      });
+      if (mem.length != 0) {
+        res.json(mem);
+      } else {
+        res.json("No member");
+      }
+    });
+  } else {
+    connection.query(sql2, function (error, results) {
+      if (error) throw error;
+      Object.keys(results).forEach(function (key) {
+        var row = results[key];
+        mem = row.Member.split(",");
+        // mem = m;
+      });
+      if (mem.length != 0) {
+        res.json(mem);
+      } else {
+        res.json("No member");
+      }
+    });
+  }
+});
+
+// app.post("/contact", function (req, res) {
+//   const name = req.body.name;
+//   const sql1 =
+//     "SELECT Phone,Email From student WHERE Name = " + mysql.escape(name);
+//   connection.query(sql1, function (error, results) {
+//     if (error) throw error;
+//     console.log("fetch");
+//     res.json(results);
+//   });
+// });
+
 app.listen(3001, function () {
   console.log("CORS-enabled web server listening on port 3001");
 });
