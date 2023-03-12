@@ -6,14 +6,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "miniapp",
-});
+// const connection = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "miniapp",
+// });
 
-connection.connect();
+require("dotenv").config();
+
+const connection = mysql.createConnection(process.env.DATABASE_URL);
 
 app.get("/clubs", function (req, res, next) {
   connection.query("SELECT * From club", function (error, results, fields) {
